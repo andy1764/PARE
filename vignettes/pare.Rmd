@@ -1,0 +1,27 @@
+---
+title: "Partial Embeddings"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{pare}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(PARE)
+library(umap)
+library(ggplot2)
+
+e <- Rtsne(iris[,-5])
+plot(e$layout, col = as.integer(iris$Species), xlab = "UMAP 1", ylab = "UMAP 2")
+
+pe <- pare(iris[,-5], ~ Species, data = iris, umap)
+plot(pe$layout, col = as.integer(iris$Species), xlab = "UMAP 1", ylab = "UMAP 2")
+```
