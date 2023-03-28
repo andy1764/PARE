@@ -16,12 +16,44 @@ knitr::opts_chunk$set(
 
 ```{r setup}
 library(PARE)
-library(umap)
-library(ggplot2)
+```
 
-e <- Rtsne(iris[,-5])
-plot(e$layout, col = as.integer(iris$Species), xlab = "UMAP 1", ylab = "UMAP 2")
+The `PARE` package implements a framework for removing confounding effects from distance-based dimension reduction methods including t-SNE, UMAP, diffusion map embeddings, and many others.
+
+# UMAP
+```{r umap}
+library(umap)
+
+e <- umap(iris[,-5])
+plot(e$layout, col = as.integer(iris$Species), xlab = "UMAP 1", ylab = "UMAP 2",
+     main = "UMAP")
 
 pe <- pare(iris[,-5], ~ Species, data = iris, umap)
-plot(pe$layout, col = as.integer(iris$Species), xlab = "UMAP 1", ylab = "UMAP 2")
+plot(pe$layout, col = as.integer(iris$Species), xlab = "UMAP 1", 
+     ylab = "UMAP 2", main = "p-UMAP")
+```
+
+```{r Rtsne}
+library(Rtsne)
+
+e <- Rtsne(iris[,-5], check_duplicates = FALSE)
+plot(e$Y, col = as.integer(iris$Species), xlab = "UMAP 1", ylab = "UMAP 2",
+     main = "t-SNE")
+
+pe <- pare(iris[,-5], ~ Species, data = iris, Rtsne, check_duplicates = FALSE)
+plot(pe$Y, col = as.integer(iris$Species), xlab = "UMAP 1", ylab = "UMAP 2",
+     main = "p-t-SNE")
+```
+
+```{R diffuse}
+library(diffusionMap)
+
+D <- dist(iris[,-5])
+e <- diffuse(D, neigen = 2)
+plot(e$X, col = as.integer(iris$Species), xlab = "Diffusion Map 1", 
+     ylab = "Diffusion Map 2", main = "Diffusion Map Embedding")
+
+pe <- pare(D, ~ Species, data = iris, diffuse, type = "dist", neigen = 2)
+plot(pe$X, col = as.integer(iris$Species), xlab = "Diffusion Map 1", 
+     ylab = "Diffusion Map 2", main = "Partial Diffusion Map Embedding")
 ```
