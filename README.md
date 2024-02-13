@@ -17,12 +17,16 @@ nuisance covariates.
 The R package can be installed via devtools by running the following
 code
 
-    # install.packages("devtools")
-    devtools::install_github("andy1764/PARE", build_vignettes = TRUE)
+```
+# install.packages("devtools")
+devtools::install_github("andy1764/PARE", build_vignettes = FALSE)
+```
 
 Then, you can load this package via
 
-    library(PARE)
+```
+library(PARE)
+```
 
 ## 2. Usage
 
@@ -38,13 +42,16 @@ pe <- pare(iris[,-5], ~ Species, data = iris, umap)
 ```
 
 A vignette is provided for the `pare` function, which also covers other
-dimension reduction methods
+dimension reduction methods. Once the suggested dependencies are installed, please run:
 
-    vignette("pare")
+```
+devtools::install_github("andy1764/PARE", build_vignettes = TRUE, force = TRUE)
+vignette("pare")
+```
 
 ## 3. Citations
 
-If using the PARE methodology, please cite the following paper:
+If using the PARE methodology, please cite the following preprint:
 
 > Chen, A. A., Clark, K., Dewey, B., DuVal, A., Pellegrini, N., Nair,
 > G., Jalkh, Y., Khalil, S., Zurawski, J., Calabresi, P., Reich, D.,
